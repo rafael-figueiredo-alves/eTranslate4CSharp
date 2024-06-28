@@ -1,0 +1,18 @@
+﻿@page "/"
+@inject IeTranslate translate;
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@translate.Version()
+
+<p>@translate.GetText()</p>
+
+<p>@translate.SetText("Olá, mundo").GetText()</p>
+
+<p>@translate.GetText()</p>
+
+
