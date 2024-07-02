@@ -10,6 +10,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddScoped<IeTranslate, eTranslate4CSharp>();
+builder.Services.AddScoped<IeTranslate>(provider =>
+{
+    var TranslationFile = (provider.GetService<HttpClient>()!).BaseAddress!.ToString();
+    TranslationFile += "teste.json";
+    return new eTranslate4CSharp(TranslationFile, "es-ES");
+});
 
 await builder.Build().RunAsync();

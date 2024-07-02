@@ -9,7 +9,8 @@ namespace eTranslate.Interfaces
     public interface IeTranslate
     {
         public string Version();
-        public string GetText();
-        public IeTranslate SetText(string text);
+        public string GetLanguage();
+        public IeTranslate SetLanguage(string Language);
+        public string Translate(string Key, params string[] ParamValues);
     }
 }
