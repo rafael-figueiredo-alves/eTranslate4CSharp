@@ -12,9 +12,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<IeTranslate>(provider =>
 {
-    var TranslationFile = (provider.GetService<HttpClient>()!).BaseAddress!.ToString();
-    TranslationFile += "teste.json";
-    return new eTranslate4CSharp(TranslationFile, "es-ES");
+    string TranslationFile = builder.HostEnvironment.BaseAddress + "translate.json";
+    return new eTranslate4CSharp(TranslationFile, "en-US", provider.GetService<HttpClient>());
 });
 
 await builder.Build().RunAsync();

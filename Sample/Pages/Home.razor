@@ -1,4 +1,5 @@
 ﻿@page "/"
+@implements IDisposable;
 @inject IeTranslate translate;
 
 <PageTitle>Home</PageTitle>
@@ -9,14 +10,36 @@ Welcome to your new app.
 
 @translate.Version()
 
-<p>@translate.GetLanguage()</p>
+<p>@texto2</p>
 
-<p>@translate.SetLanguage("pt-BR").GetLanguage()</p>
+<p>texto = @texto</p>
 
-<p>@translate.GetLanguage()</p>
 
-<p>@translate.Translate("Teste")</p>
 
-<p>@translate.Translate("Teste 2", "Blazor", "Microsoft")</p>
+@code{
+    public bool ProntoParaExibir { get; set; } = false;
+    public string texto { get; set; } = string.Empty;
+    public string texto2 { get; set; } = string.Empty;
+    public string language { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TranslateUI();
+        translate.Evento += async () => await TranslateUI();
+        language = translate.GetLanguage();
+    }
+
+    private async Task TranslateUI()
+    {
+        texto = await translate.Translate("Main.Btn1", "Rafael", "Figueiredo");
+        texto2 = await translate.Translate("Main.Btn2.Text");
+    }
+
+    public void Dispose()
+    {
+        translate.Evento -= async () => await TranslateUI();
+    }
+}
+
 
 

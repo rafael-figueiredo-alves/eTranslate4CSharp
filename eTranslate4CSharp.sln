@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{852F8AB2-1E5D-401D-BC9B-FE9FC3225F0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "Sample\Sample.csproj", "{852F8AB2-1E5D-401D-BC9B-FE9FC3225F0C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{73809E96-D5AF-4420-B2C8-E69E09184A65} = {73809E96-D5AF-4420-B2C8-E69E09184A65}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eTranslate", "eTranslate\eTranslate.csproj", "{73809E96-D5AF-4420-B2C8-E69E09184A65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eTranslate", "eTranslate\eTranslate.csproj", "{73809E96-D5AF-4420-B2C8-E69E09184A65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
