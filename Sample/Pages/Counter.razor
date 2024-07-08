@@ -8,13 +8,28 @@
 <p role="status">Current count: @currentCount</p>
 <p>@translate.GetLanguage()</p>
 
+<p>@Texto</p>
+
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
     private int currentCount = 0;
+    private string Texto { get; set; } = string.Empty;
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Translate();
+        translate.Evento += async () => await Translate();
+    }
+
+    private async Task Translate()
+    {
+        Texto = await translate.Translate("Main.Btn2.Text");
+        StateHasChanged();
     }
 }

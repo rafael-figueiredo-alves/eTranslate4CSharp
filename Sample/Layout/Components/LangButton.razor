@@ -1,0 +1,24 @@
+﻿@inject IeTranslate Translate;
+
+<button class="btn-success" @onclick="ChangeLanguage">Trocar Idioma</button>
+
+
+@code {
+    public string CurrentLanguage { get; set; } = "en-US";
+
+    public void ChangeLanguage()
+    {
+        CurrentLanguage = Translate.GetLanguage();
+        if(CurrentLanguage == "pt-BR")
+        {
+            CurrentLanguage = "en-US";
+            Translate.SetLanguage(CurrentLanguage);
+        }
+        else
+        {
+            CurrentLanguage = "pt-BR";
+            Translate.SetLanguage(CurrentLanguage);
+        }
+        StateHasChanged();
+    }
+}

@@ -103,8 +103,7 @@ namespace eTranslate
         public IeTranslate SetLanguage(string Language)
         {
             this.CurrentLanguage = Language;
-            if (Evento != null) 
-                Evento(); 
+            Evento?.Invoke();
             return this;
         }
 
