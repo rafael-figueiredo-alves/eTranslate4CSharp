@@ -28,7 +28,7 @@ namespace eTranslate
         }
 
 
-        public event Action? Evento;
+        public event Action? OnSetLanguage;
 
         private async Task<JsonElement?> Language()
         {
@@ -103,7 +103,7 @@ namespace eTranslate
         public IeTranslate SetLanguage(string Language)
         {
             this.CurrentLanguage = Language;
-            Evento?.Invoke();
+            OnSetLanguage?.Invoke();
             return this;
         }
 

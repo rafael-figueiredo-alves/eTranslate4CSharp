@@ -2,7 +2,7 @@
 {
     public interface IeTranslate
     {
-        public event Action? Evento;
+        public event Action? OnSetLanguage;
         public string Version();
         public string GetLanguage();
         public IeTranslate SetLanguage(string Language);
