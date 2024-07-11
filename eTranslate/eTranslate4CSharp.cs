@@ -1,13 +1,11 @@
 ﻿using eTranslate.Interfaces;
-using System;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace eTranslate
 {
     public class eTranslate4CSharp : IeTranslate
     {
-        const string _version = "1.0";
+        const string _version = "1.0.0";
 
         #region Variables
         private string CurrentLanguage { get; set; } = "en-US";
@@ -27,9 +25,7 @@ namespace eTranslate
             translationFile = TranslationFile;
         }
 
-
-        public event Action? OnSetLanguage;
-
+        #region Private methods
         private async Task<JsonElement?> Language()
         {
             if (TranslationJSON == null)
@@ -67,9 +63,9 @@ namespace eTranslate
             string? Retorno = null;
             var keys = GetAllKeysFromKey(key);
 
-            for(int index = 0; index < keys.Length; index++)
+            for (int index = 0; index < keys.Length; index++)
             {
-                if(index != keys.Length - 1)
+                if (index != keys.Length - 1)
                 {
                     elemento = elemento?.Key(keys[index]);
                 }
@@ -89,17 +85,37 @@ namespace eTranslate
             else
                 throw new Exception("Value was not found for the key informed. Please check the key and correct it.");
         }
+        #endregion
 
+        #region Interface Methods
+        /// <summary>
+        /// Define a event to call when a new language is set
+        /// </summary>
+        public event Action? OnSetLanguage;
+
+        /// <summary>
+        /// Get the version of the library
+        /// </summary>
+        /// <returns>The version of the library</returns>
         public string Version()
         {
             return _version;
         }
 
+        /// <summary>
+        /// Get the current language in use
+        /// </summary>
+        /// <returns>The current language in use</returns>
         public string GetLanguage()
         {
             return CurrentLanguage;
         }
 
+        /// <summary>
+        /// Sets a new language for the component and fires the event associated with OnSetLanguage
+        /// </summary>
+        /// <param name="Language">A string containing the language in the following pattern: pt-BR, en-US</param>
+        /// <returns>Access to the interface methods</returns>
         public IeTranslate SetLanguage(string Language)
         {
             this.CurrentLanguage = Language;
@@ -107,6 +123,12 @@ namespace eTranslate
             return this;
         }
 
+        /// <summary>
+        /// Main method to translate the strings to current language
+        /// </summary>
+        /// <param name="Key">The key you want to get from Translation file</param>
+        /// <param name="ParamValues">Aditional values to be used in a string like: {1} of {2} to be filled with the provided values</param>
+        /// <returns>The string from translation file filled with the additional parameters if they are provided</returns>
         public async Task<string> Translate(string Key, params string[] ParamValues)
         {
             string? valueFromKey = await GetValueFromKey(Key);
@@ -118,5 +140,6 @@ namespace eTranslate
             else
                 return valueFromKey ?? string.Empty;
         }
+        #endregion
     }
 }

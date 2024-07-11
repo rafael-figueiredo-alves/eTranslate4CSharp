@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "eTranslate": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
