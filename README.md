@@ -12,3 +12,5 @@
 
 # eTranslate4CSharp
  Biblioteca para C# para gerenciar o funcionamento de multi-idiomas numa aplicação Blazor
+
+ Documentação em fase de produção... Até estar pronta, utilize o exemplo para ter uma ideia de como usar a biblioteca.
