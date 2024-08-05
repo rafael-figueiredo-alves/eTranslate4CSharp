@@ -23,9 +23,16 @@ Welcome to your new app.
 
     protected override async Task OnInitializedAsync()
     {
-        await TranslateUI();
-        translate.OnSetLanguage += async () => await TranslateUI();
-        language = translate.GetLanguage();
+        try
+        {
+            await TranslateUI();
+            translate.OnSetLanguage += async () => await TranslateUI();
+            language = translate.GetLanguage();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 
     private async Task TranslateUI()
