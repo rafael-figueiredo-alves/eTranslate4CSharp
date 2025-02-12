@@ -25,7 +25,7 @@
     protected override async Task OnInitializedAsync()
     {
         await Translate();
-        translate.OnSetLanguage += async () => await Translate();
+        translate.AddEventToRunOnSetLanguage(async () => await Translate());
     }
 
     private async Task Translate()

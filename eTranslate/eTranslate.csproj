@@ -10,7 +10,7 @@
     <Company>Rafael Alves</Company>
     <Description>A simple library to translate the UI of a web app or a cross-platform app</Description>
     <Copyright>©2024 - Rafael de Figeuiredo Alves</Copyright>
-	<AssemblyVersion>1.0.0</AssemblyVersion>
+	<AssemblyVersion>1.1.0</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<Version>$(AssemblyVersion)</Version>
 	<PackageProjectUrl>https://github.com/rafael-figueiredo-alves/eTranslate4CSharp</PackageProjectUrl>

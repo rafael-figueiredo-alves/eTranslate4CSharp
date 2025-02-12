@@ -5,7 +5,7 @@ namespace eTranslate
 {
     public class eTranslate4CSharp : IeTranslate
     {
-        const string _version = "1.0.0";
+        const string _version = "1.1.0";
 
         #region Variables
         private string CurrentLanguage { get; set; } = "en-US";
@@ -17,7 +17,7 @@ namespace eTranslate
         public eTranslate4CSharp(string TranslationFile, string _CurrentLanguage = "en-US", HttpClient? _httpClient = null)
         {
             if (string.IsNullOrEmpty(TranslationFile))
-                throw new Exception("It's not possible ...");
+                throw new Exception("It's not possible to continue without setting a Translation File!");
 
             httpClient = _httpClient;
 
@@ -88,10 +88,33 @@ namespace eTranslate
         #endregion
 
         #region Interface Methods
+        private List<WeakReference<Action>>? _OnSetLanguage { get; set; } = new();
+
         /// <summary>
-        /// Define a event to call when a new language is set
+        /// Add events to call when a new language is set
         /// </summary>
-        public event Action? OnSetLanguage;
+        public void AddEventToRunOnSetLanguage(Action _event)
+        {
+            if(_OnSetLanguage == null)
+                _OnSetLanguage = new();
+
+            _OnSetLanguage.Add(new WeakReference<Action>(_event));
+        }
+
+        private void OnSetLanguage()
+        {
+            foreach (var weakRef in _OnSetLanguage.ToArray()) // Clonar a lista para evitar modificações durante a iteração
+            {
+                if (weakRef.TryGetTarget(out var handler))
+                {
+                    handler.Invoke();
+                }
+                else
+                {
+                    _OnSetLanguage.Remove(weakRef); // Remove referências inválidas
+                }
+            }
+        }
 
         /// <summary>
         /// Get the version of the library
@@ -119,7 +142,7 @@ namespace eTranslate
         public IeTranslate SetLanguage(string Language)
         {
             this.CurrentLanguage = Language;
-            OnSetLanguage?.Invoke();
+            OnSetLanguage();
             return this;
         }
 

@@ -3,9 +3,9 @@
     public interface IeTranslate
     {
         /// <summary>
-        /// Define a event to call when a new language is set
+        /// Add events to call when a new language is set
         /// </summary>
-        public event Action? OnSetLanguage;
+        public void AddEventToRunOnSetLanguage(Action _event);
 
         /// <summary>
         /// Get the version of the library
