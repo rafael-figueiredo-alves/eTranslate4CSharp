@@ -32,6 +32,6 @@
         /// <param name="Key">The key you want to get from Translation file</param>
         /// <param name="ParamValues">Aditional values to be used in a string like: {1} of {2} to be filled with the provided values</param>
         /// <returns>The string from translation file filled with the additional parameters if they are provided</returns>
-        public Task<string> Translate(string Key, params string[] ParamValues);
+        public Task<string> Translate(string Key, string DefaultValue = "", params string[] ParamValues);
     }
 }

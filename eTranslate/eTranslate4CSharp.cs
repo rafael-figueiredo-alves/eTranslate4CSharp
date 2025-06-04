@@ -5,7 +5,7 @@ namespace eTranslate
 {
     public class eTranslate4CSharp : IeTranslate
     {
-        const string _version = "1.1.0";
+        const string _version = "1.2.0";
 
         #region Variables
         private string CurrentLanguage { get; set; } = "en-US";
@@ -71,7 +71,18 @@ namespace eTranslate
                 }
                 else
                 {
-                    Retorno = elemento?.Value(keys[index]);
+                    if (elemento.HasValue && elemento.Value.TryGetProperty(keys[index], out JsonElement finalValue))
+                    {
+                        if (finalValue.ValueKind == JsonValueKind.String)
+                        {
+                            Retorno = finalValue.GetString();
+                        }
+                        // Opcional: Tratar outros casos, como objetos, números, etc.
+                        else
+                        {
+                            Retorno = null;
+                        }
+                    }
                 }
             }
 
@@ -103,17 +114,18 @@ namespace eTranslate
 
         private void OnSetLanguage()
         {
-            foreach (var weakRef in _OnSetLanguage.ToArray()) // Clonar a lista para evitar modificações durante a iteração
-            {
-                if (weakRef.TryGetTarget(out var handler))
+            if( _OnSetLanguage != null)
+                foreach (var weakRef in _OnSetLanguage.ToArray()) // Clonar a lista para evitar modificações durante a iteração
                 {
-                    handler.Invoke();
+                    if (weakRef.TryGetTarget(out var handler))
+                    {
+                        handler.Invoke();
+                    }
+                    else
+                    {
+                        _OnSetLanguage.Remove(weakRef); // Remove referências inválidas
+                    }
                 }
-                else
-                {
-                    _OnSetLanguage.Remove(weakRef); // Remove referências inválidas
-                }
-            }
         }
 
         /// <summary>
@@ -152,16 +164,16 @@ namespace eTranslate
         /// <param name="Key">The key you want to get from Translation file</param>
         /// <param name="ParamValues">Aditional values to be used in a string like: {1} of {2} to be filled with the provided values</param>
         /// <returns>The string from translation file filled with the additional parameters if they are provided</returns>
-        public async Task<string> Translate(string Key, params string[] ParamValues)
+        public async Task<string> Translate(string Key, string DefaultValue = "", params string[] ParamValues)
         {
             string? valueFromKey = await GetValueFromKey(Key);
 
-            if (ParamValues != null && ParamValues.Length > 0)
+            if (ParamValues != null && ParamValues.Length > 0 && !string.IsNullOrEmpty(valueFromKey))
             {
-                return FillValueWithValues(valueFromKey, ParamValues) ?? string.Empty;
+                return FillValueWithValues(valueFromKey, ParamValues) ?? DefaultValue;
             }
             else
-                return valueFromKey ?? string.Empty;
+                return valueFromKey ?? DefaultValue;
         }
         #endregion
     }

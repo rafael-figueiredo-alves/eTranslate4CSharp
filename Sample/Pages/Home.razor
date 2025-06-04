@@ -37,8 +37,8 @@ Welcome to your new app.
 
     private async Task TranslateUI()
     {
-        texto = await translate.Translate("Main.Btn1", "Rafael", "Figueiredo");
-        texto2 = await translate.Translate("Main.Btn2.Text");
+        texto = await translate.Translate("Main.Btn1", ParamValues: ["Rafael", "Figueiredo"]);
+        texto2 = await translate.Translate("Main.Btn2.Text", "Faltou valor");
         StateHasChanged();
     }
 }
