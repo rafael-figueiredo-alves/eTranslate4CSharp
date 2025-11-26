@@ -5,7 +5,7 @@ namespace eTranslate
 {
     public class eTranslate4CSharp : IeTranslate
     {
-        const string _version = "1.2.0";
+        const string _version = "1.3.0";
 
         #region Variables
         private string CurrentLanguage { get; set; } = "en-US";
